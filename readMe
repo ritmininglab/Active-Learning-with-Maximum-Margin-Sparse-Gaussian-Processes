@@ -1,0 +1,29 @@
+SGPKMC:
+The class SGPKMC is the base estimator that implements the proposed MM-SGP.
+The implementation of MM-SGP follows scikit-learn API for base.estimator. The standard methods (fit,predict,predict_proba,score) can be found in:
+https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator
+	Customized methods:
+	get_activeSet(): 
+		paras:X: the origin training set.
+			  method: ['kmean','FITC','VFE'] method to get the active set. Default is 'kmean' 
+			  sparseRate: [0~1] double. Control the sparsity of the active set.
+		retrun X_hat. the active set
+		
+	predict_var():
+		paras:X_test, test dataset.
+			  useAug:boolean. Whether to use augmented set for variance prediction or not.
+			  anchor: augmented set.
+			  sampleSize:int. Number of samples in MCMC sampling.
+		retrun X_var. The predicted variance of X_test 
+SGPMED_AL():
+The active learning method that adopt MM-SGP as active learner.
+	X: the origin training set.
+	Y: class labels.
+	train_ind,candidate_ind,test_ind: train/candidate/test index
+	sparseThres: int. MM-SGP seeks sparse approximation with training size no smaller than sparseThres.
+	decayThres: After decayThres iterations AL start to decay eta.
+	sparseRate: sparse rate for MM-SGP
+	rbf_scale: kernel length scale. If kernel='rbf' this is the length scale, if kernel='linear', this 	
+	is the bias term.
+	Niter: number of active learning iterations.
+	Return: list of test accuracy
